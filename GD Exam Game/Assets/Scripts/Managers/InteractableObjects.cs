@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class InteractableObjects : MonoBehaviour
     private bool inTrigger = false;
 
     [Header("Puzzle")]
-    public int puzzleSolutionPosition;
+    public string puzzleSolutionPosition;
     public PuzzleManager puzzleManager;
     public bool alreadyClicked = false;
 
@@ -28,10 +29,13 @@ public class InteractableObjects : MonoBehaviour
     public GameObject positionOne;
     public GameObject positionTwo;
     public GameObject platform;
+    public Rigidbody2D platformRb;
     public bool reachedSecondPoint = false;
     public bool buttonStopMovement = false;
     public bool platformRotating = true;
     public int rotationSpeed;
+    public PhotonView photonView;
+    public GameObject currentPos;
 
     // Start is called before the first frame update
     void Start()
@@ -39,30 +43,22 @@ public class InteractableObjects : MonoBehaviour
         puzzleManager = GameObject.FindGameObjectWithTag("Puzzle Parent").GetComponent<PuzzleManager>();
     }
 
+    [PunRPC]
     // Update is called once per frame
     void Update()
     {
         if (moveDoor)
         {
             StartCoroutine(DoorSwitch());
-            if (moveToPosTwo)
-            {
-                door.gameObject.transform.position = Vector3.MoveTowards(door.gameObject.transform.position, doorPosTwo.transform.position, 0.1f);
-            }
-            else
-            {
-                door.gameObject.transform.position = Vector3.MoveTowards(door.gameObject.transform.position, doorPosOne.transform.position, 0.1f);
-            }
+
+                door.gameObject.SetActive(false);
+            
         }
-
-        Debug.Log(moveToPosTwo);
-
 
         if (GameManager.canMove)
         {
 
-
-            if (inTrigger)
+            if (Trigger())
             {
                 if (objectType == ObjectType.DoorSwitch)
                 {
@@ -76,10 +72,11 @@ public class InteractableObjects : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.Return) && !alreadyClicked)
                     {
-                        PuzzleManager.puzzleInput.Add(puzzleSolutionPosition);
+                        puzzleManager.puzzleInput.Add(puzzleSolutionPosition);
                         GameManager.combinationString += puzzleSolutionPosition;
                         alreadyClicked = true;
-                        PuzzleManager.puzzleSwitches[PuzzleManager.puzzleInput.Count - 1] = this.gameObject.GetComponent<InteractableObjects>();
+                        //PuzzleManager.puzzleSwitches[PuzzleManager.puzzleInput.Count - 1] = this.gameObject.GetComponent<InteractableObjects>();
+
                     }
                 }
 
@@ -87,8 +84,9 @@ public class InteractableObjects : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        PuzzleManager.puzzleInput.Add(puzzleSolutionPosition);
+                        puzzleManager.puzzleInput.Add(puzzleSolutionPosition);
                         GameManager.combinationString += puzzleSolutionPosition;
+
                     }
                 }
 
@@ -96,15 +94,7 @@ public class InteractableObjects : MonoBehaviour
                 {
                     if (Input.GetKeyDown(KeyCode.Return))
                     {
-
-                        if (buttonStopMovement)
-                        {
-                            buttonStopMovement = false;
-                        }
-                        else if (!buttonStopMovement)
-                        {
-                            buttonStopMovement = true;
-                        }
+                        //photonView.RPC("CheckTrigger", RpcTarget.All);
 
                     }
                 }
@@ -123,6 +113,7 @@ public class InteractableObjects : MonoBehaviour
                             platformRotating = true;
                         }
 
+
                     }
                 }
 
@@ -138,6 +129,9 @@ public class InteractableObjects : MonoBehaviour
             {
                 if (objectType == ObjectType.FreeMovingPlatform || (objectType == ObjectType.ButtonMovingPlatform && !buttonStopMovement))
                 {
+
+                    currentPos.transform.position = platform.transform.position;
+
                     if (!reachedSecondPoint)
                     {
                         platform.transform.position = Vector3.MoveTowards(platform.transform.position, positionTwo.transform.position, 0.01f);
@@ -157,8 +151,14 @@ public class InteractableObjects : MonoBehaviour
                         reachedSecondPoint = true;
                     }
                 }
+                else
+                {
+                    platform.transform.position = currentPos.transform.position;
+                }
 
             }
+
+
         }
     }
 
@@ -188,37 +188,74 @@ public class InteractableObjects : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [PunRPC]
+    void CheckTrigger()
     {
-        inTrigger = true;
+        if (buttonStopMovement)
+        {
+            buttonStopMovement = false;
+        }
+        else if (!buttonStopMovement)
+        {
+            buttonStopMovement = true;
+        }
     }
 
+    [PunRPC]
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+            inTrigger = true;
+        
+    }
+
+    [PunRPC]
     private void OnTriggerExit2D(Collider2D collision)
     {
-        inTrigger = false;
+            inTrigger = false;
+        
+    }
+
+    private bool Trigger()
+    {
+        Debug.Log("TRIGGER" + inTrigger);
+        return inTrigger;
     }
 
     //Platform Code
-
+    [PunRPC]
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (objectType == ObjectType.FreeMovingPlatform)
+        if (collision.gameObject.GetPhotonView().IsMine)
         {
-            if (collision.collider.tag == "Player")
+            if (objectType == ObjectType.FreeMovingPlatform)
             {
-                collision.collider.transform.SetParent(transform);
+                if (collision.collider.tag == "Player")
+                {
+                    collision.collider.transform.SetParent(transform);
+                }
             }
         }
     }
 
+    [PunRPC]
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (objectType == ObjectType.FreeMovingPlatform)
+        if (collision.gameObject.GetPhotonView().IsMine)
         {
-            if (collision.collider.tag == "Player")
+            if (objectType == ObjectType.FreeMovingPlatform)
             {
-                collision.collider.transform.SetParent(null);
+                if (collision.collider.tag == "Player")
+                {
+                    collision.collider.transform.SetParent(null);
+                }
             }
         }
+    }
+
+    [PunRPC]
+    private void PlayAudioButton()
+    {
+        AudioManager.inGameButtonAudio.Play();
     }
 }

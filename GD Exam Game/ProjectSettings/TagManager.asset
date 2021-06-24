@@ -8,6 +8,11 @@ TagManager:
   - Wall
   - Puzzle Parent
   - Checkpoint
+  - Interaction
+  - Player 1
+  - Player 2
+  - End Trigger 1
+  - End Trigger 2
   layers:
   - Default
   - TransparentFX
@@ -45,8 +50,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 260427023
+    locked: 0
   - name: Ground
     uniqueID: 2757485547
+    locked: 0
+  - name: Interactable
+    uniqueID: 2829867917
     locked: 0
   - name: Player
     uniqueID: 297931451

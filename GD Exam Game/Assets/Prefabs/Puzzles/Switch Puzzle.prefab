@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 153764934027612531}
   - component: {fileID: 153764934027612530}
   - component: {fileID: 153764934027612529}
+  - component: {fileID: 8594558814132478948}
+  - component: {fileID: 807469403167970663}
+  - component: {fileID: 9016846172654130041}
   m_Layer: 9
   m_Name: Switch 1
   m_TagString: Wall
@@ -31,7 +34,7 @@ Transform:
   m_LocalScale: {x: 0.06374247, y: 0.08598385, z: 0.1}
   m_Children: []
   m_Father: {fileID: 153764935243676992}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &153764934027612531
 SpriteRenderer:
@@ -117,7 +120,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153764934027612535}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d319a814ccccfa3439dc5512ccfa2ee1, type: 3}
   m_Name: 
@@ -130,6 +133,81 @@ MonoBehaviour:
   moveDoor: 0
   puzzleSolutionPosition: 1
   puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  positionOne: {fileID: 0}
+  positionTwo: {fileID: 0}
+  platform: {fileID: 0}
+  platformRb: {fileID: 0}
+  reachedSecondPoint: 0
+  buttonStopMovement: 0
+  platformRotating: 1
+  rotationSpeed: 0
+  photonView: {fileID: 0}
+  currentPos: {fileID: 0}
+--- !u!114 &8594558814132478948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764934027612535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61798bea11de8a440be51ae9e70f5220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 4
+  photonView: {fileID: 807469403167970663}
+  platform: {fileID: 0}
+  positionTwo: {fileID: 0}
+  positionOne: {fileID: 0}
+  platformRotationSpeed: 65
+  door: {fileID: 0}
+  doorPosOne: {fileID: 0}
+  doorPosTwo: {fileID: 0}
+  puzzleSolutionPosition: 
+  puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  puzzleLevel: 0
+--- !u!114 &807469403167970663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764934027612535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 9016846172654130041}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &9016846172654130041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764934027612535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &153764935243676998
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,8 +236,8 @@ Transform:
   m_LocalPosition: {x: -2.09, y: -2.9770265, z: -28.687195}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 153764934027612528}
   - {fileID: 153764935553289956}
+  - {fileID: 153764934027612528}
   - {fileID: 153764935377442710}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -176,8 +254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b623925bbd48eb34e9ba5f4de1d89d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleSolution: 010000000100000001000000
+  puzzleSolution: []
   isEqual: 0
+  doorOne: {fileID: 0}
+  doorTwo: {fileID: 0}
+  doorOnePos: {fileID: 0}
+  doorTwoPos: {fileID: 0}
 --- !u!1 &153764935377442709
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,8 +272,11 @@ GameObject:
   - component: {fileID: 153764935377442705}
   - component: {fileID: 153764935377442704}
   - component: {fileID: 153764935377442711}
+  - component: {fileID: 5367281062078737816}
+  - component: {fileID: 7159506777156498842}
+  - component: {fileID: 8808302697250851975}
   m_Layer: 9
-  m_Name: Switch 1 (2)
+  m_Name: Switch 3
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,7 +380,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153764935377442709}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d319a814ccccfa3439dc5512ccfa2ee1, type: 3}
   m_Name: 
@@ -308,6 +393,81 @@ MonoBehaviour:
   moveDoor: 0
   puzzleSolutionPosition: 1
   puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  positionOne: {fileID: 0}
+  positionTwo: {fileID: 0}
+  platform: {fileID: 0}
+  platformRb: {fileID: 0}
+  reachedSecondPoint: 0
+  buttonStopMovement: 0
+  platformRotating: 1
+  rotationSpeed: 0
+  photonView: {fileID: 0}
+  currentPos: {fileID: 0}
+--- !u!114 &5367281062078737816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935377442709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61798bea11de8a440be51ae9e70f5220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 4
+  photonView: {fileID: 807469403167970663}
+  platform: {fileID: 0}
+  positionTwo: {fileID: 0}
+  positionOne: {fileID: 0}
+  platformRotationSpeed: 65
+  door: {fileID: 0}
+  doorPosOne: {fileID: 0}
+  doorPosTwo: {fileID: 0}
+  puzzleSolutionPosition: 
+  puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  puzzleLevel: 0
+--- !u!114 &7159506777156498842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935377442709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8808302697250851975}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &8808302697250851975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935377442709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &153764935553289883
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,8 +480,11 @@ GameObject:
   - component: {fileID: 153764935553289959}
   - component: {fileID: 153764935553289958}
   - component: {fileID: 153764935553289957}
+  - component: {fileID: 7986962202960630299}
+  - component: {fileID: 2132957754223541351}
+  - component: {fileID: 6305744536213568270}
   m_Layer: 9
-  m_Name: Switch 1 (1)
+  m_Name: Switch 2
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +502,7 @@ Transform:
   m_LocalScale: {x: 0.06374247, y: 0.08598385, z: 0.1}
   m_Children: []
   m_Father: {fileID: 153764935243676992}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &153764935553289959
 SpriteRenderer:
@@ -425,7 +588,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153764935553289883}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d319a814ccccfa3439dc5512ccfa2ee1, type: 3}
   m_Name: 
@@ -438,3 +601,78 @@ MonoBehaviour:
   moveDoor: 0
   puzzleSolutionPosition: 1
   puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  positionOne: {fileID: 0}
+  positionTwo: {fileID: 0}
+  platform: {fileID: 0}
+  platformRb: {fileID: 0}
+  reachedSecondPoint: 0
+  buttonStopMovement: 0
+  platformRotating: 1
+  rotationSpeed: 0
+  photonView: {fileID: 0}
+  currentPos: {fileID: 0}
+--- !u!114 &7986962202960630299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935553289883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61798bea11de8a440be51ae9e70f5220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 4
+  photonView: {fileID: 807469403167970663}
+  platform: {fileID: 0}
+  positionTwo: {fileID: 0}
+  positionOne: {fileID: 0}
+  platformRotationSpeed: 65
+  door: {fileID: 0}
+  doorPosOne: {fileID: 0}
+  doorPosTwo: {fileID: 0}
+  puzzleSolutionPosition: 
+  puzzleManager: {fileID: 0}
+  alreadyClicked: 0
+  puzzleLevel: 0
+--- !u!114 &2132957754223541351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935553289883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6305744536213568270}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6305744536213568270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153764935553289883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
