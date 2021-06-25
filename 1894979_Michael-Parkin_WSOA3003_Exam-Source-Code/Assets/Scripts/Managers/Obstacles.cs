@@ -67,7 +67,6 @@ public class Obstacles : MonoBehaviour
         if (endCheckCollision.gameObject.tag == "End Trigger 1")
         {
             GameManager.endCheckOneComplete = true;
-            Debug.LogError("1");
 
             if (!endCheckAudioOnePlayed)
             {
@@ -79,7 +78,6 @@ public class Obstacles : MonoBehaviour
         if (endCheckCollision.gameObject.tag == "End Trigger 2")
         {
             GameManager.endCheckTwoComplete = true;
-            Debug.LogError("2");
 
             if (!endCheckAudioTwoPlayed)
             {

@@ -203,14 +203,12 @@ public class Test : MonoBehaviour
     [PunRPC]
     private void EnterTrigger()
     {
-        Debug.Log("HELLO");
         inTrigger = true;
     }
 
     [PunRPC]
     private void ExitTrigger()
     {
-        Debug.Log("BYE");
         inTrigger = false;
     }
 

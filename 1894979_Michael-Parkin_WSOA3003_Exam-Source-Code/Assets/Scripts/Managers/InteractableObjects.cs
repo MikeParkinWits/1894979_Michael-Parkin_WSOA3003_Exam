@@ -218,7 +218,6 @@ public class InteractableObjects : MonoBehaviour
 
     private bool Trigger()
     {
-        Debug.Log("TRIGGER" + inTrigger);
         return inTrigger;
     }
 

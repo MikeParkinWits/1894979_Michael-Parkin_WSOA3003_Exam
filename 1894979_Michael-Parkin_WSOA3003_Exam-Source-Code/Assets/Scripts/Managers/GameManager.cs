@@ -200,7 +200,6 @@ public class GameManager : MonoBehaviour
     public void LeveFailed()
     {
         GameLost();
-        Debug.Log("RESTART");
     }
 
     private void GameWon()
@@ -242,8 +241,6 @@ public class GameManager : MonoBehaviour
             winAudioPlayed = true;
             AudioManager.completeAudio.Play();
         }
-        Debug.LogError("YAY");
-        Debug.Log("YAY");
     }
 
     [PunRPC]

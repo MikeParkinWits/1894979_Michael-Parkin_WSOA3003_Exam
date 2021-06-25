@@ -350,8 +350,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //Instantiate(currentLevelStatic, currentLevelStatic.gameObject.transform);
 
-        Debug.LogError("DEATH: " + gameManager.playerDeathCount);
-
         photonView.RPC("PlayerDeathAudio", RpcTarget.All);
 
 
@@ -359,7 +357,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             gameManager.playerDeathCount++;
 
-            Debug.LogError("DEATH: " + gameManager.playerDeathCount);
             if (gameManager.playerDeathCount > 3)
             {
                 gameManager.playerDeathLightTimer = 20;
@@ -451,8 +448,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             winAudioPlayed = true;
             AudioManager.completeAudio.Play();
         }
-        Debug.LogError("YAY");
-        Debug.Log("YAY");
     }
 
     public IEnumerator LoadNickNames()

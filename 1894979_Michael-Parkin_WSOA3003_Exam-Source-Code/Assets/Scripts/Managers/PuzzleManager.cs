@@ -52,7 +52,6 @@ public class PuzzleManager : MonoBehaviour
                 isEqual = Enumerable.SequenceEqual(puzzleSolution, puzzleInput);
                 if (isEqual)
                 {
-                    Debug.Log("Lists are Equal");
 
                 if (!winAudioPlayed)
                 {
@@ -76,7 +75,6 @@ public class PuzzleManager : MonoBehaviour
                     AudioManager.wrongAudio.Play();
                 }
 
-                Debug.Log("Lists are not Equal");
                     GameManager.combinationString = "";
 
                     foreach (var x in puzzleSwitches)

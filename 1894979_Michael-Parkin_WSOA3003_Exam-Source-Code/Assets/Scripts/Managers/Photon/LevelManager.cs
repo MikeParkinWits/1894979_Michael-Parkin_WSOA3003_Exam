@@ -46,7 +46,6 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         LevelCheck();
-        Debug.LogError("JOINED");
     }
 
     private void LevelCheck()
